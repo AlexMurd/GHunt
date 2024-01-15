@@ -88,7 +88,10 @@ class VisionFaceDetection(Parser):
         self.face_annotations: List[VisionFaceAnnotation] = []
 
     def _scrape(self, vision_data: Dict[str, any]):
-        for face_data in vision_data["faceAnnotations"]:
-            face_annotation = VisionFaceAnnotation()
-            face_annotation._scrape(face_data)
-            self.face_annotations.append(face_annotation)
+        if 'faceAnnotations' in vision_data:
+            for face_data in vision_data["faceAnnotations"]:
+                face_annotation = VisionFaceAnnotation()
+                face_annotation._scrape(face_data)
+                self.face_annotations.append(face_annotation)
+        else:
+            print("No face annotations found in the vision data.")
